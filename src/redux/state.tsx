@@ -29,13 +29,21 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    renderEntireTree: (state: RootStateType) => void
+    _callSubscriber: (state: RootStateType) => void
     addPost: () => void
     onChangePostTextInState: (newText: string) => void
-    subscribe: (observer: any) => void
+    subscribe: (observer: (state: RootStateType) => void) => void
     getState: () => RootStateType
+    dispatch: (action: ActionsType) => void
 }
-
+type AddPostActionType = {
+    type: "ADD-POST"
+}
+type UpdateNewPostTextActionType = {
+    type: "UPDATE-NEW-POST-TEXT"
+    newText: string
+}
+export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
 
 
 export let store: StoreType = {
@@ -68,7 +76,7 @@ export let store: StoreType = {
     getState () {
         return this._state
     },
-    renderEntireTree () {
+    _callSubscriber () {
         console.log("ascas")
     },
     addPost () {
@@ -79,16 +87,31 @@ export let store: StoreType = {
         }
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ''
-        this.renderEntireTree(this._state);
+        this._callSubscriber(this._state);
     },
     onChangePostTextInState (newText: string) {
         this._state.profilePage.newPostText = newText
-        this.renderEntireTree(this._state)
+        this._callSubscriber(this._state)
     },
-    subscribe (observer: any) {
-        this.renderEntireTree = observer
-    }
+    subscribe (observer) {
+        this._callSubscriber = observer
+    },
 
+    dispatch (action: any){
+        if (action.type === "ADD-POST"){
+            let newPost: PostType = {
+                id:5,
+                post: this._state.profilePage.newPostText,
+                likeCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state);
+        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
+    }
 }
 
 export default store

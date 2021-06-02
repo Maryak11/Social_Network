@@ -1,6 +1,7 @@
 import React from "react";
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
+import {ActionsType} from "../../../redux/state";
 
 export type TaskType = {
     id: number,
@@ -10,9 +11,9 @@ export type TaskType = {
 
 type MyPostsPropsType = {
     posts: Array<TaskType>
-    addPost: () => void
+    dispatch: (action: ActionsType) => void,
     newPostText: string
-    onChangePostTextInState: (newPost: string) => void
+
 }
 
 export function MyPosts(props:MyPostsPropsType){
@@ -21,15 +22,15 @@ export function MyPosts(props:MyPostsPropsType){
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
     let addPost = () => {
-            props.addPost()
-
-
+            props.dispatch({type: "ADD-POST"})
     }
 
     let onPostChange = () => {
 
         if (newPostElement.current) {
-            props.onChangePostTextInState(newPostElement.current.value)
+            let newText = newPostElement.current.value
+            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: newText})
+
         }
     }
     return(

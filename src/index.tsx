@@ -10,12 +10,12 @@ let renderEntireTree = (state: RootStateType) => {
         <React.StrictMode>
             <App
                 state = {state}
-                addPost={store.addPost.bind(store)}
-                onChangePostTextInState = {store.onChangePostTextInState.bind(store)}
+                dispatch={store.dispatch.bind(store)}
+
             />
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
-renderEntireTree(store.getState());
 store.subscribe(renderEntireTree)
+renderEntireTree(store.getState());
