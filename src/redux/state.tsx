@@ -1,3 +1,7 @@
+import {profileReducer} from "./ProfileReducer";
+import {dialogsReducer} from "./DialogsReducer";
+import {sideBarReducer} from "./sideBarReducer";
+
 export type PostType = {
     id: number,
     post: string,
@@ -21,17 +25,18 @@ export type ProfilePageType = {
 export type MessagePageType = {
     messageData: Array<MessageType>
     dialogsData: Array<DialogsType>
+    newMessageText: string
 }
 export type RootStateType = {
     profilePage: ProfilePageType
     messagePage: MessagePageType
+    sideBar: any
+
 }
 
 export type StoreType = {
     _state: RootStateType
     _callSubscriber: (state: RootStateType) => void
-    addPost: () => void
-    onChangePostTextInState: (newText: string) => void
     subscribe: (observer: (state: RootStateType) => void) => void
     getState: () => RootStateType
     dispatch: (action: ActionsType) => void
@@ -43,9 +48,23 @@ export type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
     newText: string
 }
-export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
+export type UpdateNewMessageTextAC = {
+    type: "UPDATE-NEW-MESSAGE-TEXT"
+    newMessageText: string
+}
+export type SendMessageActionType = {
+    type: "SEND-MESSAGE"
+}
+export type ActionsType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageTextAC
+    | SendMessageActionType
+
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
+const SEND_MESSAGE = "SEND-MESSAGE"
 export let addPostAC = (): AddPostActionType => {
 
     return {
@@ -59,7 +78,18 @@ export let updateNewPostAC = (newText: string): UpdateNewPostTextActionType => {
         newText
     }
 }
+export let updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextAC => {
 
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText
+    }
+}
+export const SendMessageAC = (): SendMessageActionType => {
+    return {
+        type: SEND_MESSAGE
+    }
+}
 export let store: StoreType = {
     _state: {
         profilePage: {
@@ -84,7 +114,11 @@ export let store: StoreType = {
                 {id: 3, name: "Victor"},
                 {id: 4, name: "Dima"},
                 {id: 5, name: "Matvei"}
-            ]
+            ],
+            newMessageText: "Hello!"
+        },
+        sideBar: {
+
         }
     },
     getState () {
@@ -93,38 +127,18 @@ export let store: StoreType = {
     _callSubscriber () {
         console.log("ascas")
     },
-    addPost () {
-        let newPost: PostType = {
-            id:5,
-            post: this._state.profilePage.newPostText,
-            likeCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state);
-    },
-    onChangePostTextInState (newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
+
     subscribe (observer) {
         this._callSubscriber = observer
     },
 
     dispatch (action: ActionsType){
-        if (action.type === ADD_POST){
-            let newPost: PostType = {
-                id:5,
-                post: this._state.profilePage.newPostText,
-                likeCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        }
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagePage = dialogsReducer(this._state.messagePage, action)
+        this._state.sideBar = sideBarReducer(this._state.sideBar, action)
+        this._callSubscriber(this._state)
+
     }
 }
 

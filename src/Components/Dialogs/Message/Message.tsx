@@ -15,8 +15,7 @@ const Message = (props: MessagePropsType) => {
     return (
         <div>
             <div className={s.message}>{props.message}</div>
-            <textarea ref={message} ></textarea>
-            <button onClick={addMessage}> Отправить</button>
+
         </div>
     )
 

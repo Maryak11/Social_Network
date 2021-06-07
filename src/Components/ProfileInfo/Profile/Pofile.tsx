@@ -7,7 +7,6 @@ import {ActionsType, PostType, ProfilePageType, RootStateType} from "../../../re
 type ProfilePropsType = {
     state: ProfilePageType
     dispatch: (action: ActionsType) => void,
-
     newPostText: string
 }
 

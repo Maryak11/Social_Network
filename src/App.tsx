@@ -27,7 +27,7 @@ function App(props: AppPropsType) {
                 <Nav/>
                 <div className='app-wrapper-content'>
                     <Route exact path="/dialogs"
-                           render={() => <Dialogs state = {props.state.messagePage}
+                           render={() => <Dialogs state = {props.state.messagePage} dispatch = {props.dispatch}
 
                            />}/>
                     <Route exact path="/profile"
