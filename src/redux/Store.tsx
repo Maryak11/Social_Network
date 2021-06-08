@@ -65,31 +65,19 @@ const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
 const SEND_MESSAGE = "SEND-MESSAGE"
-export let addPostAC = (): AddPostActionType => {
 
-    return {
-        type: ADD_POST
-    }
-}
-export let updateNewPostAC = (newText: string): UpdateNewPostTextActionType => {
-
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText
-    }
-}
-export let updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextAC => {
-
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newMessageText
-    }
-}
-export const SendMessageAC = (): SendMessageActionType => {
-    return {
-        type: SEND_MESSAGE
-    }
-}
+// export let updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextAC => {
+//
+//     return {
+//         type: UPDATE_NEW_MESSAGE_TEXT,
+//         newMessageText
+//     }
+// }
+// export const SendMessageAC = (): SendMessageActionType => {
+//     return {
+//         type: SEND_MESSAGE
+//     }
+// }
 export let store: StoreType = {
     _state: {
         profilePage: {

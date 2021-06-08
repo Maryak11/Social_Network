@@ -8,9 +8,11 @@ import {
     MessagePageType,
     MessageType,
     RootStateType,
-    SendMessageAC,
-    updateNewMessageTextAC
-} from "../../redux/state";
+    // SendMessageAC,
+    // updateNewMessageTextAC
+} from "../../redux/Store";
+
+import {SendMessageAC, updateNewMessageTextAC} from "../../redux/DialogsReducer";
 
 
 type DialogPropsType = {

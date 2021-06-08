@@ -2,7 +2,7 @@ import React from "react";
 import classes from './Profile.module.css'
 import MyPosts, {TaskType} from "../MyPosts/MyPosts";
 import ProfileInfo from "../ProfleInfo";
-import {ActionsType, PostType, ProfilePageType, RootStateType} from "../../../redux/state";
+import {ActionsType, PostType, ProfilePageType, RootStateType} from "../../../redux/Store";
 
 type ProfilePropsType = {
     state: ProfilePageType
