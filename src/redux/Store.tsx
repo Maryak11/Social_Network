@@ -66,19 +66,19 @@ const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
 const SEND_MESSAGE = "SEND-MESSAGE"
 
-// export let updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextAC => {
-//
-//     return {
-//         type: UPDATE_NEW_MESSAGE_TEXT,
-//         newMessageText
-//     }
-// }
-// export const SendMessageAC = (): SendMessageActionType => {
-//     return {
-//         type: SEND_MESSAGE
-//     }
-// }
-export let store: StoreType = {
+export let updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextAC => {
+
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText
+    }
+}
+export const SendMessageAC = (): SendMessageActionType => {
+    return {
+        type: SEND_MESSAGE
+    }
+}
+export let store: any = {
     _state: {
         profilePage: {
             posts: [
@@ -116,11 +116,11 @@ export let store: StoreType = {
         console.log("ascas")
     },
 
-    subscribe (observer) {
+    subscribe (observer: any) {
         this._callSubscriber = observer
     },
 
-    dispatch (action: ActionsType){
+    dispatch (action: any){
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagePage = dialogsReducer(this._state.messagePage, action)

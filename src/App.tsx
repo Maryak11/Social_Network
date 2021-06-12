@@ -9,10 +9,10 @@ import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
 import News from "./Components/News/News";
 import {ActionsType, DialogsType, MessageType, PostType, RootStateType} from "./redux/Store";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    state: RootStateType
-    dispatch: (action: ActionsType) => void,
+    state: any
 
 }
 // message = {props.message} dialogs = {props.dialogs}
@@ -27,13 +27,9 @@ function App(props: AppPropsType) {
                 <Nav/>
                 <div className='app-wrapper-content'>
                     <Route exact path="/dialogs"
-                           render={() => <Dialogs state = {props.state.messagePage} dispatch = {props.dispatch}
-
-                           />}/>
+                           render={() => <DialogsContainer store = {props.state}/>}/>
                     <Route exact path="/profile"
-                           render={() => <Profile state = {props.state.profilePage}
-                                                  newPostText = {props.state.profilePage.newPostText}
-                                                  dispatch = {props.dispatch} />}/>
+                           render={() => <Profile store = {props.state}/>}/>
                     <Route exact path="/music" render={() => <Music/>}/>
                     <Route exact path="/news" render={News}/>
                     <Route exact path="/settings" render={Settings}/>

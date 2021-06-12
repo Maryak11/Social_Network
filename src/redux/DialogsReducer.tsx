@@ -1,10 +1,8 @@
-import {SendMessageActionType, UpdateNewMessageTextAC} from "./Store";
-
-
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
 const SEND_MESSAGE = "SEND-MESSAGE"
 
 let initialState = {
+    messagePage: {
         messageData: [
             {id: 1, message: "Hi"},
             {id: 2, message: "How are you"},
@@ -20,6 +18,7 @@ let initialState = {
             {id: 5, name: "Matvei"}
         ],
         newMessageText: "Hello!"
+    }
 }
 
 export const dialogsReducer = (state: any = initialState, action: any) => {
