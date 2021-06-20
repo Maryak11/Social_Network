@@ -1,42 +1,25 @@
 import React, {ChangeEvent} from "react";
-import s from "./Dialogs.module.css"
-import DialogItem from "./DialogsItem/DialogItem";
-import Message from "./Message/Message";
-import {
-    ActionsType,
-    DialogsType,
-    MessagePageType,
-    MessageType,
-    RootStateType,
-    // SendMessageAC,
-    // updateNewMessageTextAC
-} from "../../redux/Store";
-
 import {SendMessageAC, updateNewMessageTextAC} from "../../redux/DialogsReducer";
 import Dialogs from "./Dialogs";
+import {connect} from "react-redux";
 
 
-type DialogPropsType = {
-   store: any
-}
 
-let DialogsContainer = (props: DialogPropsType) => {
+let mapStateProps = (state: any) => {
 
-    let state = props.store.getState().messagePage
-
-    let onSendMessageClick = () => {
-        props.store.dispatch(SendMessageAC())
+    return {
+        dialogsPage: state.dialogsPage
     }
-    const onChangeMessageText = (newText: string) => {
-        props.store.dispatch(updateNewMessageTextAC(newText))
-    }
-    return (
-       <Dialogs
-           updateNewMessageText={onChangeMessageText}
-           onSendMessageClick={onSendMessageClick}
-           dialogsPage = {state}
-       />
-    )
 }
-
+let mapDispatchProps = (dispatch: any) => {
+    return {
+        updateNewMessageText: () => {
+           dispatch(SendMessageAC())
+        },
+        onSendMessageClick: (newText: string) => {
+            dispatch(updateNewMessageTextAC(newText))
+        }
+    }
+}
+const DialogsContainer = connect(mapStateProps, mapDispatchProps) (Dialogs)
 export default DialogsContainer

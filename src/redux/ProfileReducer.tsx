@@ -3,40 +3,67 @@ import {PostType} from "./Store";
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
-let initialState = {
-    posts: [
-        {id: 1, post: "Hi how are you", likeCount: 1},
-        {id: 2, post: "Its my first post", likeCount: 32},
-        {id: 2, post: "Its my first post", likeCount: 32}
-    ],
-    newPostText: "it-kamasutra"
+type PostsType = {
+    id: number,
+    post: string,
+    likeCount: number
 }
-export const profileReducer = (state:any = initialState, action: any) => {
+
+type InitialStateTypeProfile = {
+    posts: PostsType[],
+    newPostText: string | undefined
+}
+
+let initialState: any = {
+        posts: [
+            {id: 1, post: "Hi how are you", likeCount: 1},
+            {id: 2, post: "Its my first post", likeCount: 32},
+            {id: 2, post: "Its my first post", likeCount: 32}
+        ],
+        newPostText: 'it-kamasutra'
+}
+
+type ActionsType = AddPostACType | UpdateNewPostACType
+export const profileReducer = (state = initialState, action: ActionsType): InitialStateTypeProfile => {
 
     switch(action.type){
-        case ADD_POST:
+        case ADD_POST: {
             let newPost: PostType = {
                 id: 5,
                 post: state.newPostText,
                 likeCount: 0
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+            let stateCopy = {...state}
+            stateCopy.posts = [...state.posts]
+            stateCopy.posts.push(newPost)
+            stateCopy.newPostText = ''
+            return stateCopy
+        }
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        }
         default:
             return state
+
     }
 }
 
-export let addPostAC = (): any => {
+type AddPostACType = {
+    type: typeof ADD_POST
+}
+
+export let addPostAC = (): AddPostACType => {
     return {
         type: ADD_POST
     }
 }
-export let updateNewPostAC = (newText: string):any => {
+type UpdateNewPostACType = {
+    type: typeof UPDATE_NEW_POST_TEXT,
+    newText: string
+}
+export let updateNewPostAC = (newText: string):UpdateNewPostACType => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText

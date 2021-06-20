@@ -34,13 +34,13 @@ export type RootStateType = {
 
 }
 
-export type StoreType = {
-    _state: RootStateType
-    _callSubscriber: (state: RootStateType) => void
-    subscribe: (observer: (state: RootStateType) => void) => void
-    getState: () => RootStateType
-    dispatch: (action: ActionsType) => void
-}
+// export type StoreType = {
+//     _state: RootStateType
+//     _callSubscriber: (state: RootStateType) => void
+//     subscribe: (observer: (state: RootStateType) => void) => void
+//     getState: () => RootStateType
+//     dispatch: (action: ActionsType) => void
+// }
 type AddPostActionType = {
     type: "ADD-POST"
 }
@@ -109,9 +109,9 @@ export let store: any = {
 
         }
     },
-    getState () {
-        return this._state
-    },
+    // getState () {
+    //     return this._state
+    // },
     _callSubscriber () {
         console.log("ascas")
     },

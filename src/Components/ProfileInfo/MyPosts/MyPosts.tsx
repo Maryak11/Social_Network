@@ -17,17 +17,16 @@ type MyPostsPropsType = {
 
 
 
-export function MyPosts(props:MyPostsPropsType){
+export function MyPosts(props:any){
 
-    let postsElements = props.posts.map( el => <Post post={el.post} id = {el.id} likeCount = {el.likeCount}/>)
+    let postsElements = props.posts.map( (el:any) => <Post post={el.post} id = {el.id} likeCount = {el.likeCount}/>)
     let newPostElement = React.createRef<HTMLTextAreaElement>()
     let addPost = () => {
         props.addPost()
     }
-
     let onPostChange = () => {
         let text = newPostElement.current?.value
-        if (text) props.onPostChange(text)
+        if (text) props.updateNewPostText(text)
     }
     return(
         <div className={classes.postBlock}>
