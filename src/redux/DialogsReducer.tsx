@@ -12,43 +12,40 @@ type DialogDataType = {
 
 
 let initialState = {
-        messageData: [
-            {id: 1, message: "Hi"},
-            {id: 2, message: "How are you"},
-            {id: 3, message: "Ok"},
-            {id: 4, message: "I am Kabzda"},
-            {id: 5, message: "Yo"}
-        ] as MessageDataType[],
-        dialogsData: [
-            {id: 1, name: "Kirill"},
-            {id: 2, name: "Lera"},
-            {id: 3, name: "Victor"},
-            {id: 4, name: "Dima"},
-            {id: 5, name: "Matvei"}
-        ] as DialogDataType[],
-        newMessageText: "Hello!"
+    messageData: [
+        {id: 1, message: "Hi"},
+        {id: 2, message: "How are you"},
+        {id: 3, message: "Ok"},
+        {id: 4, message: "I am Kabzda"},
+        {id: 5, message: "Yo"}
+    ] as MessageDataType[],
+    dialogsData: [
+        {id: 1, name: "Kirill"},
+        {id: 2, name: "Lera"},
+        {id: 3, name: "Victor"},
+        {id: 4, name: "Dima"},
+        {id: 5, name: "Matvei"}
+    ] as DialogDataType[],
+    newMessageText: "Hello!"
 }
 export type InitialStateTypeDialogs = typeof initialState
 type ActionsType = SendMessageACType | UpDateNewMessageTextAC
 
 export const dialogsReducer = (state = initialState, action: ActionsType): InitialStateTypeDialogs => {
-    switch (action.type){
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            let copyState = {...state}
-            copyState.newMessageText = action.body
-            return copyState
-        }
-        case SEND_MESSAGE:
-            let copyState = {...state,
-            message: [...state.dialogsData]
+    switch (action.type) {
+        case UPDATE_NEW_MESSAGE_TEXT:
+            return {
+                ...state,
+                newMessageText: action.body
             }
-            let body = copyState.newMessageText
-            copyState.newMessageText = ''
-            copyState.messageData.push({
-                id: 6,
-                message: body,
-            })
-            return copyState
+
+        case SEND_MESSAGE:
+            let body = state.newMessageText
+            return {
+                ...state,
+                messageData: [...state.messageData, {id: 6, message: body,}],
+                newMessageText: '',
+            }
         default:
             return state
     }
