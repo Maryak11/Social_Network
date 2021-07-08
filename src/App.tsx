@@ -7,7 +7,7 @@ import {Route} from 'react-router-dom';
 import Settings from "./Components/Settings/Settings";
 import News from "./Components/News/News";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
-import UsersContainer from "./Components/Users/UsersContainer";
+import UsersContainer from "./Components/Users/UsersContainerAPI";
 
 function App() {
     return (
